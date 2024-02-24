@@ -9,13 +9,12 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        var pageLinks = document.querySelectorAll('.pagination .page-link');
+        let pageLinks = document.querySelectorAll('.pagination .page-link');
 
         pageLinks.forEach(function (link) {
             link.addEventListener('click', function (event) {
                 event.preventDefault();
-
-                var page = this.getAttribute('data-page');
+                let page = this.getAttribute('data-page');
                 window.location.href = "{{ route('news.page') }}/" + page;
             });
         });

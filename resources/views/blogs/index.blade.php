@@ -36,7 +36,7 @@
                 @endfor
                 <li class="page-item {{ $page == $totalPages ? 'disabled' : '' }}">
                     <a class="page-link" href="#" data-page="{{ $page + 1 }}" aria-label="Siguiente">
-                        <span aria-hidden="true">Siguiente {{$page}} &raquo;</span>
+                        <span aria-hidden="true">Siguiente &raquo;</span>
                     </a>
                 </li>
                 
