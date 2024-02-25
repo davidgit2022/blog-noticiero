@@ -7,17 +7,9 @@
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
 </script>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        let pageLinks = document.querySelectorAll('.pagination .page-link');
+@stack('scripts')
 
-        pageLinks.forEach(function (link) {
-            link.addEventListener('click', function (event) {
-                event.preventDefault();
-                let page = this.getAttribute('data-page');
-                window.location.href = "{{ route('news.page') }}/" + page;
-            });
-        });
-    });
-</script>
+
+
+
 

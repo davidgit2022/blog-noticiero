@@ -4,8 +4,13 @@ document.addEventListener('DOMContentLoaded', function () {
     pageLinks.forEach(function (link) {
         link.addEventListener('click', function (event) {
             event.preventDefault();
+
+            let urlCurrent = new URL(window.location.href);
+            let urlParameter = urlCurrent.pathname;
+            let arr = urlParameter.split('/');
             let page = this.getAttribute('data-page');
-            window.location.href = "{{ route('news.page') }}/" + page;
+            window.location.href = `/${arr[1]}/${page}`;
+          
         });
     });
 });
