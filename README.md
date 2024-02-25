@@ -12,7 +12,7 @@ Proyecto es un blog/noticiero que utiliza dos APIs externas para obtener informa
 ## Instalación
 
 ```bash
-1. Clona el repositorio: `git clone https://github.com/tuusuario/tuproyecto.git`
+1. Clona el repositorio: `git clone https://github.com/davidgit2022/blog-noticiero.git`
 2. Navega al directorio del proyecto: `cd blog-noticiero`
 3. Instala las dependencias de Laravel: `composer install`
 4. Instala las dependencias de JavaScript: `npm install`
