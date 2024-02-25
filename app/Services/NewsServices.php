@@ -1,26 +1,17 @@
 <?php
+
 namespace App\Services;
 
 use GuzzleHttp\Client;
-class NewsServices{
+
+class NewsServices
+{
     private $numberRegister = 10;
 
-    public function getNewsList($page = 2)
+    public function getNewsList($page = 1)
     {
-        $client = new Client();
+        $allArticles = $this->fetchNewsArticles();
 
-        $allNewsResponse = $client->get('https://newsapi.org/v2/top-headlines', [
-            'query' => [
-                'apiKey' => config('services.newsapi.key'),
-                'country' => 'de',
-                'category' => 'business',
-                'pageSize' => 100
-            ],
-        ]);
-
-        $allArticles = json_decode($allNewsResponse->getBody(), true)['articles'];
-
-        
         $totalArticles = count($allArticles);
         $totalPages = ceil($totalArticles / $this->numberRegister);
         $page = max(1, min($page, $totalPages));
@@ -28,7 +19,6 @@ class NewsServices{
         $end = min($start + $this->numberRegister, $totalArticles);
 
         $articles = array_slice($allArticles, $start, $this->numberRegister);
-
 
         return [
             'articles' => $articles,
@@ -38,14 +28,7 @@ class NewsServices{
 
     public function getAuthorsList()
     {
-        $client = new Client();
-        $response = $client->get('https://randomuser.me/api/', [
-            'query' => [
-                'results' => $this->numberRegister,
-            ],
-        ]);
-
-        $authors = json_decode($response->getBody(), true)['results'];
+        $authors = $this->fetchAuthors();
 
         $collectionAuthors = collect($authors)->map(function ($author) {
             return [
@@ -58,5 +41,33 @@ class NewsServices{
         })->all();
 
         return $collectionAuthors;
+    }
+
+    private function fetchNewsArticles()
+    {
+        $client = new Client();
+
+        $allNewsResponse = $client->get('https://newsapi.org/v2/top-headlines', [
+            'query' => [
+                'apiKey' => config('services.newsapi.key'),
+                'country' => 'de',
+                'category' => 'business',
+                'pageSize' => 100
+            ],
+        ]);
+
+        return json_decode($allNewsResponse->getBody(), true)['articles'];
+    }
+
+    private function fetchAuthors()
+    {
+        $client = new Client();
+        $response = $client->get('https://randomuser.me/api/', [
+            'query' => [
+                'results' => $this->numberRegister,
+            ],
+        ]);
+
+        return json_decode($response->getBody(), true)['results'];
     }
 }

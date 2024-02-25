@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title', 'News')
 @section('content')
     <div class="container mt-5">
         <h1>Blog/Noticiero</h1>
@@ -43,4 +43,6 @@
             </ul>
         </nav>        
     </div>
+   
 @endsection
+
