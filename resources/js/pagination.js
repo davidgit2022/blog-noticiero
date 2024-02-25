@@ -7,9 +7,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
             let urlCurrent = new URL(window.location.href);
             let urlParameter = urlCurrent.pathname;
-            let arr = urlParameter.split('/');
+            let urlSection = urlParameter.split('/');
             let page = this.getAttribute('data-page');
-            window.location.href = `/${arr[1]}/${page}`;
+            window.location.href = `/${urlSection[1]}/${page}`;
           
         });
     });

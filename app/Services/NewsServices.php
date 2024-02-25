@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use GuzzleHttp\Client;
+use App\Utils\FetchUtils;
 
 class NewsServices
 {
@@ -10,7 +11,7 @@ class NewsServices
 
     public function getNewsList($page = 1)
     {
-        $allArticles = $this->fetchNewsArticles();
+        $allArticles = FetchUtils::fetchNewsArticles();
 
         $totalArticles = count($allArticles);
         $totalPages = ceil($totalArticles / $this->numberRegister);
@@ -28,7 +29,7 @@ class NewsServices
 
     public function getAuthorsList()
     {
-        $authors = $this->fetchAuthors();
+        $authors = FetchUtils::fetchAuthors($this->numberRegister);
 
         $collectionAuthors = collect($authors)->map(function ($author) {
             return [
@@ -43,31 +44,4 @@ class NewsServices
         return $collectionAuthors;
     }
 
-    private function fetchNewsArticles()
-    {
-        $client = new Client();
-
-        $allNewsResponse = $client->get('https://newsapi.org/v2/top-headlines', [
-            'query' => [
-                'apiKey' => config('services.newsapi.key'),
-                'country' => 'de',
-                'category' => 'business',
-                'pageSize' => 100
-            ],
-        ]);
-
-        return json_decode($allNewsResponse->getBody(), true)['articles'];
-    }
-
-    private function fetchAuthors()
-    {
-        $client = new Client();
-        $response = $client->get('https://randomuser.me/api/', [
-            'query' => [
-                'results' => $this->numberRegister,
-            ],
-        ]);
-
-        return json_decode($response->getBody(), true)['results'];
-    }
 }
