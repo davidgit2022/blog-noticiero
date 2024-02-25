@@ -31,4 +31,17 @@ class FetchUtils{
 
         return json_decode($response->getBody(), true)['results'];
     }
+
+    public static function formatAuthors($authors)
+    {
+        return collect($authors)->map(function ($author) {
+            return [
+                'name' => [
+                    'first' => $author['name']['first'],
+                    'last' => $author['name']['last'],
+                ],
+                'email' => $author['email']
+            ];
+        })->all();
+    }
 }

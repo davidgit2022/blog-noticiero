@@ -12,7 +12,7 @@ class NewsServices
     public function getNewsList($page = 1)
     {
         $allArticles = FetchUtils::fetchNewsArticles();
-
+        
         $totalArticles = count($allArticles);
         $totalPages = ceil($totalArticles / $this->numberRegister);
         $page = max(1, min($page, $totalPages));
@@ -31,15 +31,7 @@ class NewsServices
     {
         $authors = FetchUtils::fetchAuthors($this->numberRegister);
 
-        $collectionAuthors = collect($authors)->map(function ($author) {
-            return [
-                'name' => [
-                    'first' => $author['name']['first'],
-                    'last' => $author['name']['last'],
-                ],
-                'email' => $author['email']
-            ];
-        })->all();
+        $collectionAuthors = FetchUtils::formatAuthors($authors);
 
         return $collectionAuthors;
     }
